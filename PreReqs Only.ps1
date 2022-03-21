@@ -71,10 +71,10 @@ Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\CurrentVersion
 # At this sec pol you need to grant the EMAdmin user the LOGON As A Service right
 
 Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
-if ($dnsIP -ne "") {
+if ($null -ne $dnsIP  ) {
     Set-DnsClientServerAddress -InterfaceAlias $netAdapterName -ServerAddresses ($dnsIP)
 }
-if ($netAdapterName -ne "") {
+if ($null -ne $netAdapterName ) {
     Disable-NetAdapterBinding -InterfaceAlias $netAdapterName -ComponentID ms_tcpip6
 }
 $oReturn=[System.Windows.Forms.MessageBox]::Show("Add EMadmin to log on a a service","Title",[System.Windows.Forms.MessageBoxButtons]::OKCancel)
