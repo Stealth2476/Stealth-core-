@@ -3,6 +3,7 @@
 #
 #           Pre Reqs Only
 #===============================================
+param ($netAdapterName,$dnsIP)
 
 Import-Module Servermanager
 [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
@@ -48,9 +49,11 @@ Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\CurrentVersion
 
 # At this sec pol you need to grant the EMAdmin user the LOGON As A Service right
 
-secpol
 Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
-$netAdapterName = "Ethernet"
-Set-DnsClientServerAddress -InterfaceAlias $netAdapterName -ServerAddresses ("10.10.10.100")
-Disable-NetAdapterBinding -InterfaceAlias $netAdapterName -ComponentID ms_tcpip6
+if $dnsIP <> "" {
+    Set-DnsClientServerAddress -InterfaceAlias $netAdapterName -ServerAddresses ($dnsIP)
+}
+if $netAdapterName <> "" {
+    Disable-NetAdapterBinding -InterfaceAlias $netAdapterName -ComponentID ms_tcpip6
+}
 $oReturn=[System.Windows.Forms.MessageBox]::Show("Add EMadmin to log on a a service","Title",[System.Windows.Forms.MessageBoxButtons]::OKCancel)
