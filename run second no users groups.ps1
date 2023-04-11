@@ -25,15 +25,7 @@
 # SOFTWARE.
 #===============================================
 #   POC script by tim saja v20160921.1
-
-# ==================== Add EMAdmin to the Domain and add to the domain admins group ===================================================
-Import-Module ActiveDirectory
-new-aduser EMAdmin -AccountPassword (ConvertTo-SecureString -AsPlainText "Administer4Me!" -Force) -Enabled $true -Path 'CN=Users,DC=stealth,DC=local' -PasswordNeverExpires $true
-$user = Get-ADUser -filter {name -like "EMAdmin"}
-$group = Get-ADGroup -Filter {name -like "Domain Admins"}
-Add-ADGroupMember $group -Member $user 
-$object = New-Object System.Security.Principal.NTAccount("EMAdmin")
-$SID = $object.Translate([System.Security.Principal.SecurityIdentifier])
+#   Remove create EMadmin user and adding to Domain Admin Group 
 
 
 # ==================== Add Windows Features ===========================================================================================
