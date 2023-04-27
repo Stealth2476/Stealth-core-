@@ -36,6 +36,7 @@
 #
 # install needed features to be a domain controller and HTTP Activation
 
+param ($domainName="stealth.local")
 Import-Module Servermanager
 Add-Windowsfeature AD-Domain-Services, MSMQ
 Add-WindowsFeature RSAT-AD-PowerShell,RSAT-AD-AdminCenter
@@ -53,4 +54,4 @@ Write-Host "IE Enhanced Security Configuration (ESC) has been disabled." -Foregr
 
 
 # make server a domain controller
-Install-ADDSForest -DomainName Stealth.local
+Install-ADDSForest -DomainName $domainName
